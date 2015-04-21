@@ -4,6 +4,7 @@ branches:
   only:
     - master
     - v4
+cache: bundler
 env:
   global:
     - secure: | # CODECLIMATE_REPO_TOKEN
@@ -20,3 +21,4 @@ rvm:
   - "2.2"
   - ruby-head
 script: bundle exec rspec
+sudo: false
