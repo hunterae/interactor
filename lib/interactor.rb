@@ -16,6 +16,16 @@ require "interactor/organizer"
 #     end
 #   end
 module Interactor
+  class_eval do
+    @@config = OpenStruct.new
+    @@config.context_class = Context
+  end
+
+  # Default way to set Interactor settings
+  def self.setup
+    yield @@config
+  end
+
   # Internal: Install Interactor's behavior in the given class.
   def self.included(base)
     base.class_eval do
@@ -91,7 +101,7 @@ module Interactor
   #   MyInteractor.new
   #   # => #<MyInteractor @context=#<Interactor::Context>>
   def initialize(context = {})
-    @context = Context.build(context)
+    @context = @@config.context_class.build(context)
   end
 
   # Internal: Invoke an interactor instance along with all defined hooks. The
